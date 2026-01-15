@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+    <div>
+        <a href="/" style="text-decoration: none; color: #64748b;">&larr; Back to Dashboard</a>
+        <h2>{{ table.name }}</h2>
+    </div>
+    <div>
+        <a href="{{ url_for('insert_row', name=table.name) }}" class="btn">Insert Row</a>
+    </div>
+</div>
+
+<div class="card">
+    {% if rows %}
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    {% for col in table.schema.keys() %}
+                    <th>{{ col }} <span style="font-weight: normal; font-size: 0.75em; color: #64748b;">({{
+                            table.schema[col] }})</span></th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    {% for col in table.schema.keys() %}
+                    <td>{{ row.get(col) }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: #64748b;">No data in this table yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

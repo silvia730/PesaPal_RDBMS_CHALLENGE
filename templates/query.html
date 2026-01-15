@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+    <h2>SQL Query Interface</h2>
+    <form method="POST">
+        <label>Execute SQL</label>
+        <textarea name="sql" rows="5"
+            style="width: 100%; border: 1px solid #e2e8f0; border-radius: 0.25rem; padding: 0.5rem; font-family: monospace;"
+            placeholder="SELECT * FROM inventory">{{ sql }}</textarea>
+        <div class="actions"
+            style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+            <button type="submit" class="btn">Execute</button>
+            <a href="/" class="btn btn-outline" style="text-decoration: none;">Back</a>
+
+            <span style="border-left: 1px solid #e2e8f0; height: 1.5rem; margin: 0 0.5rem;"></span>
+
+            <!-- Quick Actions -->
+            <button type="submit" name="quick_action" value="BEGIN" class="btn"
+                style="background:#64748b;">BEGIN</button>
+            <button type="submit" name="quick_action" value="COMMIT" class="btn"
+                style="background:#16a34a;">COMMIT</button>
+            <button type="submit" name="quick_action" value="ROLLBACK" class="btn"
+                style="background:#dc2626;">ROLLBACK</button>
+        </div>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger" style="margin-top: 1rem;">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    {% if result is not none %}
+    <h3 style="margin-top: 2rem;">Results</h3>
+    {% if result is string %}
+    <div class="alert alert-success">{{ result }}</div>
+    {% else %}
+    <div style="overflow-x: auto;">
+        <table>
+            {% if result|length > 0 %}
+            <!-- No header info in raw result list, just show data -->
+            <tbody>
+                {% for row in result %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% else %}
+            <p>No rows returned.</p>
+            {% endif %}
+        </table>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

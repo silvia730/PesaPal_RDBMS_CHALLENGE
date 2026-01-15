@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+    <h2>Your Tables</h2>
+    {% if tables %}
+    <table>
+        <thead>
+            <tr>
+                <th>Table Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table in tables %}
+            <tr>
+                <td>{{ table }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('view_table', name=table) }}" class="btn btn-outline">View Data</a>
+                    <form action="{{ url_for('drop_table', name=table) }}" method="POST"
+                        onsubmit="return confirm('Are you sure?');" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #64748b;">No tables found. Create one to get started!</p>
+    <a href="/create-table" class="btn">Create First Table</a>
+    {% endif %}
+</div>
+{% endblock %}

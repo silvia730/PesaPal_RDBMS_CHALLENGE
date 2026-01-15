@@ -1,0 +1,13 @@
+{
+  "schema": {
+    "id": "INTEGER",
+    "name": "VARCHAR(10)"
+  },
+  "rows": [
+    {
+      "id": 1,
+      "name": "Test"
+    }
+  ],
+  "indexes": {}
+}

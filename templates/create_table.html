@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+    <h2>Create New Table</h2>
+    <form method="POST">
+        <label>Table Name</label>
+        <input type="text" name="table_name" required placeholder="e.g. users">
+
+        <label>Schema Definition</label>
+        <p style="font-size: 0.875rem; color: #64748b; margin-top: -0.5rem; margin-bottom: 0.5rem;">
+            Format: <code>column:TYPE, column:TYPE</code><br>
+            Supported types: INTEGER, VARCHAR(n), BOOLEAN, DATE
+        </p>
+        <input type="text" name="schema_def" required placeholder="id:INTEGER, name:VARCHAR(50), active:BOOLEAN">
+
+        <button type="submit" class="btn">Create Table</button>
+    </form>
+</div>
+{% endblock %}
