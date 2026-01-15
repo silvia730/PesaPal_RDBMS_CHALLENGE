@@ -2,7 +2,6 @@
 
 PyDB is a lightweight yet fully functional Relational Database Management System built entirely from scratch in Python. The project demonstrates a deep understanding of database internals, software architecture, and system design by implementing core RDBMS features without relying on external database engines such as SQLite or ORM frameworks like SQLAlchemy.
 
-This project is intended for educational, evaluative, and demonstration purposes, showcasing how relational databases work under the hood.
 
 ---
 
