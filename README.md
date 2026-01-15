@@ -5,6 +5,10 @@ LIVE URL : https://pesapal-rdbms-challenge-1.onrender.com
 
 PyDB is a lightweight yet fully functional Relational Database Management System built entirely from scratch in Python. The project demonstrates a deep understanding of database internals, software architecture, and system design by implementing core RDBMS features without relying on external database engines such as SQLite or ORM frameworks like SQLAlchemy.
 
+## PROJECT DEPLOYMENT 
+I deployed the project on render , view the live demo:
+LIVE URL : https://pesapal-rdbms-challenge-1.onrender.com
+
 ## 🎯 Project Motivation
 
 This project was built to demonstrate a deep, fundamental understanding of how databases work at their core—from parsing SQL to guaranteeing ACID properties. Rather than using existing database libraries, I implemented each component from scratch to showcase system design and algorithmic thinking.
