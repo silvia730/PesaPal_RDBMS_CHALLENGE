@@ -2,9 +2,34 @@
 
 PyDB is a lightweight yet fully functional Relational Database Management System built entirely from scratch in Python. The project demonstrates a deep understanding of database internals, software architecture, and system design by implementing core RDBMS features without relying on external database engines such as SQLite or ORM frameworks like SQLAlchemy.
 
+## 🎯 Project Motivation
 
+This project was built to demonstrate a deep, fundamental understanding of how databases work at their core—from parsing SQL to guaranteeing ACID properties. Rather than using existing database libraries, I implemented each component from scratch to showcase system design and algorithmic thinking.
 ---
+## 🚀 Quick Installation
 
+```bash
+# Clone the repository
+git clone https://github.com/your-username/pydb-rdbms.git
+cd pydb-rdbms
+
+# Install dependencies (only 2 required!)
+pip install -r requirements.txt
+
+# Run the web demo
+python app.py
+# Open http://localhost:5000
+
+#### Verification Screenshot (Proof It Works)**
+```markdown
+## ✅ Proof of Working Features
+
+| Feature | Screenshot | What It Demonstrates |
+|---------|------------|---------------------|
+| **Web Interface** | ![Web App](screenshots/web-app.png) | Real CRUD application |
+| **SQL Console** | ![SQL Interface](screenshots/sql-console.png) | Raw SQL execution |
+| **JOIN Results** | ![Join Output](screenshots/join-output.png) | Relational queries working |
+| **Constraint Error** | ![Error](screenshots/constraint-error.png) | Data integrity enforcement |
 ## ✨ Features Overview
 
 ### SQL Engine
