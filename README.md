@@ -161,12 +161,7 @@ pytest tests/
 
 ---
 
-## 🤖 Use of AI Tools
+## Designed and buillt by :
+DEVELOPER : Silvia Njeri
+EMAIL: silvianjeri730@gmail.com
 
-AI tools were used selectively to assist with scaffolding and documentation. All core logic, architecture decisions, and testing were designed, implemented, and validated manually.
-
----
-
-## 📜 License
-
-This project is released for educational and demonstration purposes. See the LICENSE file for details.
