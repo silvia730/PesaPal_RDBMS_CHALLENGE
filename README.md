@@ -1,111 +1,174 @@
-# PyDB: Custom Relational Database System
+# PyDB — A Custom Relational Database Management System (RDBMS)
 
-**PyDB** is a fully functional, lightweight Relational Database Management System (RDBMS) built from scratch in Python. It demonstrates core database concepts including SQL parsing, transaction management (ACID), indexing, and query execution without relying on any external database libraries (like SQLite or SQLAlchemy).
+PyDB is a lightweight yet fully functional Relational Database Management System built entirely from scratch in Python. The project demonstrates a deep understanding of database internals, software architecture, and system design by implementing core RDBMS features without relying on external database engines such as SQLite or ORM frameworks like SQLAlchemy.
 
-This project was built to demonstrate deep understanding of database internals and software architecture.
+## 🎯 Project Motivation
+
+This project was built to demonstrate a deep, fundamental understanding of how databases work at their core—from parsing SQL to guaranteeing ACID properties. Rather than using existing database libraries, I implemented each component from scratch to showcase system design and algorithmic thinking.
+---
+## 🚀 Quick Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/pydb-rdbms.git
+cd pydb-rdbms
+
+# Install dependencies (only 2 required!)
+pip install -r requirements.txt
+
+# Run the web demo
+python app.py
+# Open http://localhost:5000
+
+#### Verification Screenshot (Proof It Works)**
+```markdown
+## ✅ Proof of Working Features
+
+| Feature | Screenshot | What It Demonstrates |
+|---------|------------|---------------------|
+| **Web Interface** | ![Web App](screenshots/web-app.png) | Real CRUD application |
+| **SQL Console** | ![SQL Interface](screenshots/sql-console.png) | Raw SQL execution |
+| **JOIN Results** | ![Join Output](screenshots/join-output.png) | Relational queries working |
+| **Constraint Error** | ![Error](screenshots/constraint-error.png) | Data integrity enforcement |
+## ✨ Features Overview
+
+### SQL Engine
+
+* Custom-built, regex-based SQL parser supporting a subset of ANSI SQL
+* Supported commands:
+
+  * `CREATE TABLE`
+  * `INSERT`
+  * `SELECT`
+  * `UPDATE`
+  * `DELETE`
+  * `DROP TABLE`
+* `WHERE` clause filtering with comparison operators (`=`, `!=`, `>`, `<`, `>=`, `<=`)
+
+### Query Capabilities
+
+* **Joins**: Supports `INNER JOIN` and `LEFT JOIN` using a Nested Loop Join algorithm
+* **Projections**: Column-level selection (e.g., `SELECT users.name, orders.total`)
+
+### Data Integrity & Constraints
+
+* **Primary Key Enforcement**
+* **Unique Constraints**
+* **NOT NULL Constraints**
+* **Strict Type System**:
+
+  * `INTEGER`
+  * `VARCHAR`
+  * `BOOLEAN`
+  * `DATE`
+
+### Transactions (ACID Properties)
+
+* Atomic transactions implemented using snapshot isolation (copy-on-write)
+* Transaction commands:
+
+  * `BEGIN`
+  * `COMMIT`
+  * `ROLLBACK`
+* Table-level locking to ensure thread-safe write operations
+
+### Indexing
+
+* In-memory Hash Indexes for constant-time (`O(1)`) lookups on equality predicates
 
 ---
 
-## 🚀 Key Features
+## 🏗️ System Architecture
 
-### 1. SQL Engine
-- **Custom Parser**: Regex-based parser supporting a subset of ANSI SQL.
-- **Commands**: `CREATE TABLE`, `INSERT`, `SELECT`, `UPDATE`, `DELETE`, `DROP TABLE`.
-- **Filtering**: `WHERE` clause support with operators (`=`, `!=`, `>`, `<`, `>=`, `<=`).
+PyDB follows a modular architecture with clear separation of concerns:
 
-### 2. Advanced Query Features
-- **JOIN Operations**: Implements **Nested Loop Join** algorithm to support `INNER JOIN` and `LEFT JOIN`.
-- **Projections**: Support for specific column selection (e.g., `SELECT users.name, posts.title`).
-
-### 3. Data Integrity & Constraints
-- **Primary Keys**: Enforces uniqueness on ID columns.
-- **Unique Constraints**: Ensures no duplicate values in specified columns.
-- **Not Null Constraints**: Prevents NULL values in critical fields.
-- **Type System**: Strict typing for `INTEGER`, `VARCHAR`, `BOOLEAN`, and `DATE`.
-
-### 4. Transactions (ACID)
-- **Snapshot Isolation**: Implements atomic transactions using a copy-on-write mechanism.
-- **Commands**: `BEGIN`, `COMMIT`, `ROLLBACK`.
-- **Concurrency**: Table-level locking ensures thread safety during write operations.
-
-### 5. Indexing
-- **Hash Indexing**: In-memory Hash Maps for `O(1)` lookups on equality queries (e.g., `WHERE id = 5`).
-
----
-
-## 🏗️ Architecture
-
-The system is modularized into distinct components following separation of concerns:
-
-```mermaid
-graph TD
-    User[Client / Web App] --> Facade[Database Facade (pydb.py)]
-    Facade --> Parser[SQL Parser (parser.py)]
-    Parser --> AST[Abstract Syntax Tree]
-    Facade --> Executor[Query Executor (executor.py)]
-    Executor --> AST
-    Executor --> Optimizer[Index Selector]
-    Executor --> Join[Join Executor (joins.py)]
-    Executor --> Constraints[Constraint Manager (constraints.py)]
-    Executor --> Transactions[Transaction Manager (transactions.py)]
-    Transactions --> Storage[Storage Engine (storage.py)]
-    Storage --> Disk[(JSON Files)]
+```
+Client / Web App
+        ↓
+Database Facade (pydb.py)
+        ↓
+     SQL Parser
+        ↓
+ Abstract Syntax Tree (AST)
+        ↓
+ Query Executor
+        ↓
+ ┌───────────────┬─────────────────┬──────────────────┐
+ │ Join Executor │ Constraint Mgmt │ Transaction Mgmt │
+ └───────────────┴─────────────────┴──────────────────┘
+        ↓
+  Storage Engine (JSON Persistence)
 ```
 
-- **Storage Engine**: Persists data as JSON files (`db_data/`). Handles file I/O and locking.
-- **Transaction Manager**: Manages temporary state for active transactions, applying changes to storage only on `COMMIT`.
-- **Executor**: The brain of the DB. Coordinates joins, constraints, and data retrieval.
-- **Constraint Manager**: Validates schema requirements before writes.
+### Component Responsibilities
+
+* **Parser**: Converts SQL input into structured AST representations
+* **Executor**: Coordinates query execution, joins, constraints, and indexing
+* **Transaction Manager**: Handles transactional state and isolation
+* **Storage Engine**: Persists tables as JSON files and manages disk I/O
+* **Constraint Manager**: Enforces schema-level rules prior to writes
 
 ---
 
-## 💻 Web Application Demo
+## 🌐 Web Application Demo
 
-A Flask-based **Product Inventory Management** system is included to visually demonstrate the database capabilities.
+PyDB includes a Flask-based Product Inventory Management web application to demonstrate real-world usage.
 
-### Features
-- **Inventory List**: Displays products joined with their Categories (`LEFT JOIN`).
-- **Add/Edit Product**: Full CRUD interface with Constraint validation (shows errors for duplicates).
-- **SQL Console**: Power-user interface to run raw SQL and manually control Transactions.
+### Demo Features
 
-### How to Run
+* Product inventory listing with category data via `LEFT JOIN`
+* Full CRUD operations with constraint validation
+* Embedded SQL console for manual queries and transaction control
 
-1. **Start the Application**:
-   ```bash
-   export PATH=$PATH:/home/bugsquasher/.local/bin
-   python3 app.py
-   ```
-2. **Access**: Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+### Running the Web App
+
+```bash
+export PATH=$PATH:/home/bugsquasher/.local/bin
+python3 app.py
+```
+
+Access the application at:
+
+```
+http://127.0.0.1:5000
+```
 
 ---
 
-## 🛠️ CLI Interface (REPL)
+## 🖥️ Command-Line Interface (REPL)
 
-Interact with the database directly from the terminal:
+PyDB provides an interactive REPL for executing SQL commands directly.
+
+### Start the REPL
 
 ```bash
 python3 repl.py
 ```
 
-**Example Session:**
+### Example Session
+
 ```sql
 pydb> BEGIN;
 pydb> INSERT INTO inventory VALUES (10, 'Test Item', 500, 10, '2025-01-01', 1);
 pydb> SELECT * FROM inventory WHERE id = 10;
 pydb> ROLLBACK;
-pydb> SELECT * FROM inventory WHERE id = 10; -- Returns empty
+pydb> SELECT * FROM inventory WHERE id = 10;
 ```
 
 ---
 
 ## 🧪 Testing
 
-The project includes a comprehensive test suite using `pytest` covering:
-- Unit tests for Parser regex logic.
-- Integration tests for Joins and Constraints.
-- Transaction atomicity verification.
+The project includes a comprehensive automated test suite built with `pytest`.
 
-Run tests:
+### Test Coverage
+
+* SQL parser unit tests
+* Join execution and constraint validation
+* Transaction atomicity and rollback correctness
+
+### Run Tests
+
 ```bash
 export PYTHONPATH=$PYTHONPATH:.
 pytest tests/
@@ -113,7 +176,16 @@ pytest tests/
 
 ---
 
-## 🔮 Future Improvements
-- **B-Tree Indexing**: to support range queries (`<`, `>`) efficiently.
-- **Query Optimizer**: Cost-based optimization to choose between Nested Loop and Hash Joins.
-- **Durability**: Write-Ahead Logging (WAL) for better crash recovery.
+## 🔮 Future Enhancements
+
+* B-Tree or LSM-based indexing for efficient range queries
+* Cost-based query optimizer
+* Write-Ahead Logging (WAL) for crash recovery and durability
+* Improved concurrency control (row-level locking)
+
+---
+
+## Designed and buillt by :
+DEVELOPER : Silvia Njeri
+EMAIL: silvianjeri730@gmail.com
+
